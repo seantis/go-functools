@@ -51,14 +51,11 @@ func TestEqual(t *testing.T) {
 
 func TestEffect(t *testing.T) {
 	storage := make([]int, 0)
-	newStorage := func() func(int) {
-		store := func(x int) {
-			storage = append(storage, x)
-		}
-		return store
+	store := func(x int) {
+		storage = append(storage, x)
 	}
 	xs := []int{1, 2, 3, 4, 5}
-	Apply(xs, newStorage())
+	Apply(xs, store)
 	if !Equal(xs, storage) {
 		t.Errorf("expected apply to store values %v, was %v", xs, storage)
 	}
