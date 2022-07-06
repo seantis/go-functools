@@ -14,6 +14,16 @@ func Equal[T comparable](xs, ys []T) bool {
 	return true
 }
 
+// Effect is a function that takes a value, but produces none.
+type Effect[T any] func(T)
+
+// Apply applies the given effect to all values.
+func Apply[T any](xs []T, e Effect[T]) {
+	for _, x := range xs {
+		e(x)
+	}
+}
+
 // Predicate is a predicate function.
 type Predicate[T any] func(T) bool
 

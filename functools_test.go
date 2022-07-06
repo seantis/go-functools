@@ -49,6 +49,21 @@ func TestEqual(t *testing.T) {
 	}
 }
 
+func TestEffect(t *testing.T) {
+	storage := make([]int, 0)
+	newStorage := func() func(int) {
+		store := func(x int) {
+			storage = append(storage, x)
+		}
+		return store
+	}
+	xs := []int{1, 2, 3, 4, 5}
+	Apply(xs, newStorage())
+	if !Equal(xs, storage) {
+		t.Errorf("expected apply to store values %v, was %v", xs, storage)
+	}
+}
+
 type filterTest[T any] struct {
 	xs        []T
 	predicate Predicate[T]
